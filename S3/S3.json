@@ -1,0 +1,18 @@
+{
+	 "AWSTemplateFormatVersion": "2010-09-09",
+	 "Description": "Simple S3 Bucket",
+		"Parameters": { 
+			"BucketName": {
+			"Description": "Bucket Name",
+			"Type": "String"
+			}
+		},
+		 "Resources": {
+			 "mys3bucket": {
+				 "Type": "AWS::S3::Bucket",
+					 "Properties":{
+						"BucketName": {"Ref":"BucketName"}
+					}
+				}
+			}
+}
