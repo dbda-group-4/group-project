@@ -1,0 +1,68 @@
+{ 
+"Parameters": {
+	"DBName": {
+      "Description" : "The database Name in your RDS",
+      "Type": "String"
+    },
+    "DBUser": {
+      "Description" : "The database admin account username",
+      "Type": "String"
+    },
+
+    "DBPassword": {
+      "Description" : "The database admin account password",
+      "Type": "String"
+     },
+
+    "DBAllocatedStorage": {
+		"Description" : "The size of the database (Gb)",
+		"Type": "Number"
+    },
+	"DBInstanceClass": {
+		"Description" : "The database instance type",
+		"Type": "String"
+    },
+	"DBAvailabilityZone":{
+		"Description" : "The availability of instance ",
+		"Type": "String"
+    },
+    "DBInstanceIdentifier": {
+      "Description" : "Select Zone",
+      "Type": "String"
+	}
+  },
+"Resources": {
+        "MyDB": {
+            "Type": "AWS::RDS::DBInstance",
+            "Properties": {
+                "AllocatedStorage": { "Ref" : "DBAllocatedStorage" } ,
+                "AvailabilityZone": "us-east-1a",
+                "DBInstanceClass": { "Ref" : "DBInstanceClass" },
+                "DBInstanceIdentifier": { "Ref" : "DBInstanceIdentifier" },
+                "DeleteAutomatedBackups": true,
+                "Engine": "MySQL",
+		"EngineVersion" : "5.7.22",
+                "MasterUsername": { "Ref" : "DBUser" },
+                "MasterUserPassword": { "Ref" : "DBPassword" },
+                "Port": "3306",
+                "PubliclyAccessible": true,
+				"Tags" : [{ "Key"  : "Name", "Value" : "Master Database" }],
+				"VPCSecurityGroups" : [ { "Fn::GetAtt": [ "DBEC2SecurityGroup", "GroupId" ]}]
+        }
+		},
+		
+		"DBEC2SecurityGroup": {
+					"Type": "AWS::EC2::SecurityGroup",
+					"Properties" : {
+							"GroupDescription": "Open database for access",
+							"SecurityGroupIngress" : [{
+										"IpProtocol" : "tcp",
+										"FromPort" : "3306",
+										"ToPort" : "3306",
+										"CidrIp" : "202.189.245.70/32"
+        }]
+      }
+    }
+		 
+    }
+}
