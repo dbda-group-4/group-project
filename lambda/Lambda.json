@@ -6,12 +6,12 @@
             "Type": "AWS::Lambda::Function",
             "Properties": {
                 "Handler": "lambda.lambda_handler",
-                "Role": "arn:aws:iam::550069569828:role/s3-rds-role",
+                "Role": "arn:aws:iam::912139560145:role/lambda-cft",
                 "FunctionName": {
                     "Ref": "functionname"
                 },
                 "Code": {
-                    "S3Bucket": "",
+                    "S3Bucket": "group4project",
                     "S3Key": "lambda.zip"
                 },
                 "Runtime": "python3.6",
